@@ -3,12 +3,16 @@ A ROS program and interface to alert people that live in natural disasters risk 
 
 
 ### System settings
-Python 2.7
-ubuntu 16.04 (Ros kinect)
-ubuntu 18.04 (Ros Melodic)
 
-### How to run
-## Runing Local
+
+
+ Ubuntu -V | Ros -v      | Python -V
+:-------:  |  :------:   | :---:
+16.04      |    Kinect   |  2.7
+18.04      |    Melodic  |  2.7
+
+## How to run
+### Runing Local
 In distinct terminals
 
 1°
@@ -26,26 +30,39 @@ python publisher.py
 ```
 ## Runing in multiple machines
 
+### after all install the ssh
+```
+sudo apt-get update
+sudo apt-get install openssh-server
+sudo apt-get install openssh-client
+sudo ufw allow 22
+```
+
+
 M1 is the master machine
 M2 is the secundary machines
 
-M1
+M1 = machine 1 name   
+M2 = machine 2 name
 
-first of all, start the master in one terminal
+On M1, start the master in one terminal
+
 ```
-ssh M1
 roscore
 ```
 So in another terminal
 ```
-ssh M1
-export ROS_MASTER_URI=http://m1:11311
 python publisher.py
+or
+python subscribe.py
 ```
+
 M2
 
 ```
-ssh M2
-export ROS_MASTER_URI=http://m1:11311
-python subscriber.py
+ssh M1@ip_M1
+
+python publisher.py
+or
+python subscribe.py
 ```
