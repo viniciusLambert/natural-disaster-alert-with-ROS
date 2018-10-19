@@ -27,12 +27,16 @@ def descripto(msg):
 
     return local, desastre, data, horario
 
-def callback(x):
-    local, desastre, data, horario = descripto(x.data)
+def mostrarmsg(local, desastre, data, horario):
     print('\033[31m'+"--------------------AVISO-------------------------"+'\033[0;0m');
     print('\033[31m'+"--------------------AVISO-------------------------"+'\033[0;0m');
     print('\033[31m'+"--------------------AVISO-------------------------"+'\033[0;0m');
     print("Evacuar area previsao de %s no dia %s as %s\n" % (desastre, data, horario))
+
+
+def callback(x):
+    local, desastre, data, horario = descripto(x.data)
+    mostrarmsg(local, desastre, data, horario)
 
 
 def main():
@@ -49,7 +53,7 @@ def main():
             local = raw_input("digite o local onde deseja se registrar\n")
             flag = raw_input("para confirmar o registro em %s digite 'r'\n" % (local))
             if(flag == 'r'):
-                rospy.init_node("China_sub", anonymous=True)
+                rospy.init_node("SD_sub", anonymous=True)
                 rospy.Subscriber(local, String, callback)
                 print("registro realizado")
                 rospy.spin()
