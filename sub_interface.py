@@ -14,30 +14,48 @@ from std_msgs.msg import String
 
 class Application:
     def __init__(self, master = None):
-        self.fontePadrao = ("Arial", "10")
+        self.fontePadrao = ("Arial", "12")
         self.w1 = Frame(master)
-        self.w1["pady"] = 10
+        self.w1["pady"] = 20
+        self.w1["padx"] = 20
         self.w1.pack()
+
+
         self.w2 = Frame(master)
+        self.w2["padx"] = 10
         self.w2["pady"] = 10
         self.w2.pack()
-        self.w3 = Frame(master)
-        self.w3["pady"] = 10
-        self.w3.pack()
+        self.ll = Label(self.w2, text="Polos inscritos:", font=self.fontePadrao, width=69, justify=LEFT, anchor=W)
+        self.ll.pack()
+        self.scrollbar2 = Scrollbar(self.w2)
+        self.scrollbar2.pack(side=LEFT, fill=Y)
+        self.listbox2 = Listbox(self.w2, yscrollcommand=self.scrollbar2.set, width=14, font="Arial 12 bold")
+        self.listbox2.pack(side=LEFT)
+        self.scrollbar2.config(command=self.listbox2.yview)
+
+
+        self.scrollbar = Scrollbar(self.w2)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.listbox = Listbox(self.w2, yscrollcommand=self.scrollbar.set, fg='red', width=55, font=self.fontePadrao)
+        self.listbox.pack(side=LEFT, fill=BOTH, expand=True)
+        self.scrollbar.config(command=self.listbox.yview)
+
+        self.w4 = Frame(master)
+        self.w4["padx"] = 10
+        self.w4["pady"] = 10
+        self.w4.pack()
 
         self.dpolo = Label(self.w1, text="Digite o polo", font=self.fontePadrao)
         self.dpolo.pack(side=LEFT)
-        self.polo = Entry(self.w1, width=40, font=self.fontePadrao)
+        self.polo = Entry(self.w1, width=30, font=self.fontePadrao)
         self.polo.pack(side=LEFT)
-
-        self.inscr = Button(self.w1, text="Inscrever polo", font=self.fontePadrao)
+        self.inscr = Button(self.w1, text="inscrever", font=self.fontePadrao)
         self.inscr["command"] = self.registrar_polo
         self.inscr.pack(side=LEFT)
 
-        self.aviso = Label(self.w2, text="Avisos!", font=self.fontePadrao)
-        self.aviso.pack()
+        self.listbox.insert(END, "Avisos!")
 
-        self.sair = Button(self.w3, text="Sair", font=self.fontePadrao)
+        self.sair = Button(self.w4, text="Sair", font=self.fontePadrao)
         self.sair["command"] = self.w2.quit
         self.sair.pack()
 
@@ -47,13 +65,18 @@ class Application:
         return text
 
     def registrar_polo(self):
+        self.listbox2.insert(END, self.polo.get())
         main(self)
 
     def warn(self, local, desastre, data, horario):
-        self.aviso["text"] = self.aviso.cget("text")+('\n-----------------------------AVISO----------------------------------------\n'+
-                            '-----------------------------AVISO----------------------------------------\n'+
-                            'Evacuar area previsao de %s no dia %s as %s\n' % (desastre, data, horario))
-        self.aviso['bg'] = "red"
+        texto1 = ('-----------------------------AVISO-------------------------------------')
+        texto2 = ('-----------------------------AVISO-------------------------------------')
+        texto3 = ('Evacuar area de %s previsao de %s no dia %s as %s' % (local, desastre, data, horario))
+        self.listbox.insert(END, "")
+        self.listbox.insert(END, texto1)
+        self.listbox.insert(END, texto2)
+        self.listbox.insert(END, texto3)
+        self.listbox.yview(END)
 
 
 def descripto(msg):
@@ -98,7 +121,6 @@ def main(app):
     flag = ""
 
     local = app.get_polo()
-
 
     rospy.init_node("SD_sub", anonymous=True)
     rospy.Subscriber(local, String, callback)
