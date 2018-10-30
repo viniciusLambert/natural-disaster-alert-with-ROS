@@ -120,13 +120,3 @@ export ROS_IP=<Sub IP>
 ```
 
 Now you just have to run the codes :)
-
-
-delete -> vinculos com telefone
-notify -> um botão register
-          Um textBox longo o suficiente pra caber um link
-
-Mqtt  ->  label -> username
-          label -> senha
-          label -> port
-          label -> host
