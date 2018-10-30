@@ -11,8 +11,25 @@ A ROS program and interface to alert people that live in natural disasters risk 
 16.04      |    Kinect   |  2.7
 18.04      |    Melodic  |  2.7
 
-## How to run
+
+## Install your preferred push method
+
+##### Notify
+```
+pip install notify-run
+```
+
+
+#### Mqtt
+
+```
+pip install paho-mqtt
+```
+
+
+# How to run
 ### Runing Local
+
 In distinct terminals
 
 1°
@@ -28,8 +45,10 @@ or
 python publisher.py
 
 ```
-## Runing in multiple machines
+# Runing in multiple machines
 
+
+## Connect using SSH
 ### after all install the ssh
 ```
 sudo apt-get update
@@ -66,3 +85,48 @@ python publisher.py
 or
 python subscribe.py
 ```
+
+## Connect using native ROS Method
+
+### On Pub
+
+Start ROS
+```
+roscore
+```
+In another terminal:
+
+See the master IP
+```
+hostname -I
+```
+Assign the IP to ROS
+```
+export ROS_IP=<Pub IP>
+```
+
+##### Connect the Sub machines to the Pub machine
+##### On Subscribes
+```
+export ROS_MASTER_URI=http://<Pub IP>:11311
+```
+See the Sub IP
+```
+hostname -I
+```
+Assign the IP to ROS
+```
+export ROS_IP=<Sub IP>
+```
+
+Now you just have to run the codes :)
+
+
+delete -> vinculos com telefone
+notify -> um botão register
+          Um textBox longo o suficiente pra caber um link
+
+Mqtt  ->  label -> username
+          label -> senha
+          label -> port
+          label -> host
