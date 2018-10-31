@@ -41,7 +41,7 @@ class Application:
         entry = self.builder.get_object('lbl_tipo')
         desastre = entry.get()
         entry = self.builder.get_object('lbl_dia')
-        datas = entry.get()
+        data = entry.get()
         entry = self.builder.get_object('lbl_mes')
         data += "/" + entry.get()
         entry = self.builder.get_object('lbl_ano')
