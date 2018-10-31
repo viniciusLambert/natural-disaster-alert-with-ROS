@@ -147,7 +147,7 @@ class Application:
         client.loop_start()
         time.sleep(1)
 
-        client.publish("ALERTA", 'Evacuar area de %s previsao de %s no dia %s as %s' % (local, desastre, data, horario))
+        client.publish("Teste", 'Evacuar area de %s previsao de %s no dia %s as %s' % (local, desastre, data, horario))
         time.sleep(5)
 
         client.loop_stop()
